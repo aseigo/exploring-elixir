@@ -15,7 +15,10 @@ defmodule ExploringElixir.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
-    [extra_applications: [:logger]]
+    [
+      extra_applications: [:logger],
+      mod: {ExploringElixir.Application, []}
+    ]
   end
 
   # Dependencies can be Hex packages:
@@ -31,6 +34,8 @@ defmodule ExploringElixir.Mixfile do
     [
       {:flow, "~> 0.11" },
       {:poison, "~> 3.1.0"},
+      {:ecto, "~> 2.1.4"},
+      {:postgrex, "~> 0.13.0"},
       {:remix, "~> 0.0.2", only: :dev},
       {:credo, "~> 0.8.1", only: :dev}
     ]
