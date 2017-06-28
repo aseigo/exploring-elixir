@@ -1,0 +1,12 @@
+{
+  "data": {
+    "user": "jane.doe"
+  },
+  "init": {
+    "v": 1,
+    "methods": [
+      "password",
+      "captcha"
+    ]
+  }
+}
