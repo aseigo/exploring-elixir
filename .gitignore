@@ -21,3 +21,4 @@ erl_crash.dump
 .*.swp
 
 /benchmarks
+/.tool_versions
