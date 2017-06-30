@@ -15,12 +15,36 @@ defmodule Toolbelt do
     Enum.each info_attrs, attr_printer
   end
 
+  @doc "Prints all pending messages in the process' mailbox to console"
+  @spec flush() :: :ok
   def flush() do
     receive do
       msg -> IO.inspect msg; flush()
     after
       10 -> :ok
     end
+  end
+
+  @doc "Times a function"
+  @spec time(fun) :: integer
+  def time(function) do
+    :timer.tc(function)
+    |> elem(0)
+    |> Kernel./(1_000_000)
+  end
+
+  @spec time(fun, list) :: integer
+  def time(function, args) do
+    :timer.tc(function, args)
+    |> elem(0)
+    |> Kernel./(1_000_000)
+  end
+
+  @spec time(atom, atom, list) :: integer
+  def time(module, function, args) do
+    :timer.tc(module, function, args)
+    |> elem(0)
+    |> Kernel./(1_000_000)
   end
 
   def maybe(nil, _keys), do: nil
