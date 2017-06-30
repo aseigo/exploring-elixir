@@ -14,6 +14,7 @@ defmodule ExploringElixir.OneFive do
     GenServer.cast __MODULE__, {:ping, self()}
   end
 
+  @impl true
   def handle_cast({:ping, pid}, state) do
     Process.send pid, :pong, []
     {:noreply, state}
