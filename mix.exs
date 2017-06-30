@@ -38,6 +38,7 @@ defmodule ExploringElixir.Mixfile do
       {:postgrex, "~> 0.13.3"},
       {:timex, "~> 3.0"},
       {:benchee, "~> 0.9.0"},
+      {:benchee_html, "~> 0.3"},
       {:uuid, "~> 1.1.7"},
       {:remix, "~> 0.0.2", only: :dev},
       {:credo, "~> 0.8.1", only: :dev}
