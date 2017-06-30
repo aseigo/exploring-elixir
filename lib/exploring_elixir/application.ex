@@ -5,10 +5,10 @@ defmodule ExploringElixir.Application do
   import Supervisor.Spec
 
   def start(_type, _args) do
-    spawn(fn -> EctoBench.simpleWrites 1000 end)
+    #spawn(fn -> EctoBench.simpleWrites 1000 end)
 
     children = [
-      supervisor(EctoBench.Repo, [])
+      #supervisor(EctoBench.Repo, [])
     ]
 
     opts = [strategy: :one_for_one, name: ExploringElixir.Supervisor]
