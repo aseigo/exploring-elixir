@@ -15,7 +15,8 @@ defmodule ExploringElixir.MapBench do
           %{:to_uniq_entries => a, :comprehension_filter => b, :"Australia/Hobart" => c} = atoms
           {date, a, b, c}
         end
-    }
+    }, formatters: [&Benchee.Formatters.HTML.output/1],
+       formatter_options: [html: [file: "benchmarks/map_match.html"]]
 
   end
 
