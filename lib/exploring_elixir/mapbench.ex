@@ -1,23 +1,36 @@
 defmodule ExploringElixir.MapBench do
   def match do
     %{dates: dates, atoms: atoms} = init_maps()
+    count = 1000
 
     Benchee.run %{
       "Function header matching" =>
-        fn ->
-          date = match(dates)
-          uuid = match(atoms)
-          {date, uuid}
-        end,
+        fn -> function_headers(dates, atoms, count, count) end,
       "Inline matching" =>
-        fn ->
-          %{today: date} = dates
-          %{:to_uniq_entries => a, :comprehension_filter => b, :"Australia/Hobart" => c} = atoms
-          {date, a, b, c}
-        end
+        fn -> inline_match(dates, atoms, count, count) end
     }, formatters: [&Benchee.Formatters.HTML.output/1],
        formatter_options: [html: [file: "benchmarks/map_match.html"]]
 
+  end
+
+  def function_headers(_dates, _atoms, garbage, 0) do
+    garbage
+  end
+
+  def function_headers(dates, atoms, _garbage, count) do
+    date = match(dates)
+    uuid = match(atoms)
+    function_headers(dates, atoms, {date, uuid}, count - 1)
+  end
+
+  def inline_match(_dates, _atoms, garbage, 0) do
+    garbage
+  end
+
+  def inline_match(dates, atoms, _garbage, count) do
+    %{today: date} = dates
+    %{:to_uniq_entries => a, :comprehension_filter => b, :"Australia/Hobart" => c} = atoms
+    inline_match(dates, atoms, {date, a, b, c}, count - 1)
   end
 
   @table_name :large_table_test
