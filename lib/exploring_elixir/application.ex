@@ -8,6 +8,7 @@ defmodule ExploringElixir.Application do
     #spawn(fn -> EctoBench.simpleWrites 1000 end)
 
     children = [
+      ExploringElixir.OneFive
       #supervisor(EctoBench.Repo, [])
     ]
 
