@@ -6,6 +6,7 @@ defmodule ExploringElixir.Application do
 
   def start(_type, _args) do
     #spawn(fn -> EctoBench.simpleWrites 1000 end)
+    #spawn(fn -> ExploringElixir.MapBench.ets_creation end)
 
     children = [
       ExploringElixir.OneFive
