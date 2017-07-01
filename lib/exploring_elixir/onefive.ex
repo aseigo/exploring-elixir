@@ -6,8 +6,7 @@ defmodule ExploringElixir.OneFive do
   end
 
   def start_link(args) do
-    rv = GenServer.start_link __MODULE__, args, name: __MODULE__
-    rv
+    GenServer.start_link __MODULE__, args, name: __MODULE__
   end
 
   def ping do
