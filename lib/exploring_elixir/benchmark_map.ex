@@ -23,6 +23,7 @@ defmodule ExploringElixir.Benchmark.Map do
   end
 
   def match(%{"2018-07-02 00:00:00Z": date}), do: date
+  def match(%{:to_uniq_entries => a, :comprehension_filter => b, :"Australia/Hobart" => c}), do: {a, b, c}
   def match(%{:"MACRO-unquote" => uuid}), do: uuid
   def match(%{imports_from_env: uuid}), do: uuid
   def match(%{ctime:  uuid}), do: uuid
