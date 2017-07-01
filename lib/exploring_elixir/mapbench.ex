@@ -40,13 +40,12 @@ defmodule ExploringElixir.MapBench do
           Enum.each(1..10_000, fn count -> :ets.new(String.to_atom(Integer.to_string(count)), [:named_table]) end)
           Enum.each(1..10_000, fn count -> :ets.delete(String.to_atom(Integer.to_string(count))) end)
         end,
-      "Create and destroy 10_000 ets tables in parallel (16 stages)" =>
+      "Create and destroy 10_000 ets tables in parallel" =>
         fn ->
           Flow.from_enumerable(1..10_000)
-          |> Flow.partition(stages: 16)
-          |> Flow.reduce(fn -> 0 end, fn number, count -> :ets.new(String.to_atom(Integer.to_string(number)), [:named_table, :public]); count + 1 end)
+          |> Flow.each(fn number -> :ets.new(String.to_atom(Integer.to_string(number)), [:named_table, :public]) end)
           |> Flow.run
-        end
+        end,
       }, formatters: [&Benchee.Formatters.HTML.output/1],
          formatter_options: [html: [file: "benchmarks/ets_creation.html"]]
   end
