@@ -39,12 +39,4 @@ defmodule ExploringElixir.OneFive do
     |> Flow.reduce(fn -> :rand.jump() end, fn _input, state -> {number, state} = :rand.uniform_s(100_000, state); IO.puts("#{inspect self()}: #{number}"); state end)
     |> Flow.run
   end
-
-  def faster_maps do
-    ExploringElixir.MapBench.match
-  end
-
-  def faster_big_ets_tables do
-    ExploringElixir.MapBench.ets
-  end
 end
