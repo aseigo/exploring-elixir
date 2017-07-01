@@ -10,8 +10,8 @@ defmodule ExploringElixir.MapBench do
         fn -> inline_match(dates, atoms, count, count) end
     }, formatters: [&Benchee.Formatters.HTML.output/1],
        formatter_options: [html: [file: "benchmarks/map_match.html"]]
-
   end
+
 
   def function_headers(_dates, _atoms, garbage, 0) do
     garbage
@@ -31,6 +31,24 @@ defmodule ExploringElixir.MapBench do
     %{today: date} = dates
     %{:to_uniq_entries => a, :comprehension_filter => b, :"Australia/Hobart" => c} = atoms
     inline_match(dates, atoms, {date, a, b, c}, count - 1)
+  end
+
+  def ets_creation do
+    Benchee.run %{
+      "Create and destroy 10_000 ets tables" =>
+        fn ->
+          Enum.each(1..10_000, fn count -> :ets.new(String.to_atom(Integer.to_string(count)), [:named_table]) end)
+          Enum.each(1..10_000, fn count -> :ets.delete(String.to_atom(Integer.to_string(count))) end)
+        end,
+      "Create and destroy 10_000 ets tables in parallel (16 stages)" =>
+        fn ->
+          Flow.from_enumerable(1..10_000)
+          |> Flow.partition(stages: 16)
+          |> Flow.reduce(fn -> 0 end, fn number, count -> :ets.new(String.to_atom(Integer.to_string(number)), [:named_table, :public]); count + 1 end)
+          |> Flow.run
+        end
+      }, formatters: [&Benchee.Formatters.HTML.output/1],
+         formatter_options: [html: [file: "benchmarks/ets_creation.html"]]
   end
 
   @table_name :large_table_test
