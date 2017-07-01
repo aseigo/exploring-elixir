@@ -18,7 +18,7 @@ defmodule ExploringElixir.Benchmark.Ets do
 
   @table_name :large_table_test
   def population do
-    %{dates: dates, atoms: atoms} = ExploringElixir.Benchmark.Maps.init_maps()
+    %{dates: dates, atoms: atoms} = ExploringElixir.Benchmark.Map.init_maps()
     sizes = %{
               "Few rows, large data" => {100, dates, atoms},
               "Few rows, small data" => {100, self(), self()},
