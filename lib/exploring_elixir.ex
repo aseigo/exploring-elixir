@@ -7,4 +7,16 @@ defmodule ExploringElixir do
     ExploringElixir.JSONFilter.extract self(), f, "data"
     Toolbelt.flush()
   end
+
+  def episode2 do
+    # Features
+    ExploringElixir.OneFive.ping
+    ExploringElixir.OneFive.unicode_atoms
+    ExploringElixir.OneFive.rand_jump
+
+    # Benchmarks
+    ExploringElixir.Benchmark.Map.match
+    ExploringElixir.Benchmark.Ets.creation
+    ExploringElixir.Benchmark.Ets.population
+  end
 end

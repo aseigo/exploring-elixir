@@ -1,5 +1,5 @@
 defmodule ExploringElixir.Benchmark.Ets do
-  def ets_creation do
+  def creation do
     Benchee.run %{
       "Create and destroy 10_000 ets tables" =>
         fn ->
@@ -17,7 +17,7 @@ defmodule ExploringElixir.Benchmark.Ets do
   end
 
   @table_name :large_table_test
-  def ets do
+  def population do
     %{dates: dates, atoms: atoms} = ExploringElixir.Benchmark.Maps.init_maps()
     sizes = %{
               "Few rows, large data" => {100, dates, atoms},
