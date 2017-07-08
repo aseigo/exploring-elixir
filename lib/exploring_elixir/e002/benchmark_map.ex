@@ -7,7 +7,9 @@ defmodule ExploringElixir.Benchmark.Map do
       "Function header matching" =>
         fn -> function_headers(dates, atoms, count, count) end,
       "Inline matching" =>
-        fn -> inline_match(dates, atoms, count, count) end
+        fn -> inline_match(dates, atoms, count, count) end,
+      "Record matching" =>
+        fn -> record_matching(perhaps(), count) end
     }, formatters: [&Benchee.Formatters.HTML.output/1],
        formatter_options: [html: [file: "benchmarks/map_match.html"]]
   end
@@ -39,6 +41,14 @@ defmodule ExploringElixir.Benchmark.Map do
     %{:to_uniq_entries => a, :comprehension_filter => b, :"Australia/Hobart" => c} = atoms
     inline_match(dates, atoms, {date, a, b, c}, count - 1)
   end
+
+  def record_matching(_, 0), do: :ok
+  def record_matching({:ok, _x}, count), do: record_matching(perhaps(), count - 1)
+  def record_matching({:error, _x}, count), do: record_matching(perhaps(), count - 1)
+
+  def perhaps, do: perhaps(:rand.uniform(100))
+  def perhaps(x) when x > 50, do: {:ok, x}
+  def perhaps(x), do: {:error, x}
 
   def init_maps() do
     now = Timex.today
