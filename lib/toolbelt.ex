@@ -51,4 +51,8 @@ defmodule Toolbelt do
   def maybe(val, []), do: val
   def maybe(map, [h|t]) when is_map(map), do: maybe(Map.get(map, h), t)
   def maybe(_, _), do: nil
+
+  def random_string(num_bytes, str_length \\ 0)
+  def random_string(num_bytes, 0), do: :crypto.strong_rand_bytes(num_bytes) |> Base.url_encode64
+  def random_string(num_bytes, str_length), do: :crypto.strong_rand_bytes(num_bytes) |> Base.url_encode64 |> binary_part(0, str_length)
 end
