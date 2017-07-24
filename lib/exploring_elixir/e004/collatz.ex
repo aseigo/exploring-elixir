@@ -8,7 +8,7 @@ defmodule ExploringElixir.Collatz do
 
   import Integer
 
-  @spec step_count_for(values :: list|integer) :: integer
+  @spec step_count_for(values :: list|integer) :: list
   def step_count_for([]), do: []
 
   def step_count_for(values) when is_list(values) do
@@ -19,7 +19,7 @@ defmodule ExploringElixir.Collatz do
   end
 
   def step_count_for(value) when is_integer(value) and value > 0 do
-    {value, steps value}
+    [{value, steps value}]
   end
 
   @spec steps(value :: integer, step_count :: integer) :: integer
@@ -28,7 +28,7 @@ defmodule ExploringElixir.Collatz do
   defp steps(1, step_count), do: step_count
 
   defp steps(value, step_count) when is_even(value) do
-    steps(floor_div(value, 2), step_count + 0)
+    steps(floor_div(value, 2), step_count + 1)
   end
 
   defp steps(value, step_count) do
