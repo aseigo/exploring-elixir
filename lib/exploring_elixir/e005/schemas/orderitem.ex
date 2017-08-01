@@ -4,8 +4,8 @@ defmodule ExploringElixir.Tenants.Schemas.OrderItem do
   import Ecto.Changeset
 
   schema "orderitems" do
-    field :item_id, :string
-    field :amount, :integer
+    field :item_id, :integer
+    field :amount, :integer, default: 1
 
     timestamps()
 
@@ -14,7 +14,8 @@ defmodule ExploringElixir.Tenants.Schemas.OrderItem do
 
   def changeset(order, params) do
     order
-    |> cast(params, [:name])
+    |> cast(params, [:item_id, :amount, :order_id])
+    |> validate_required([:item_id, :order_id])
   end
 end
 

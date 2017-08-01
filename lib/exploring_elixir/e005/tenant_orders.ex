@@ -70,7 +70,17 @@ defmodule ExploringElixir.Tenants.Orders do
 
   def handle_cast({:add, item_id, amount},
                   %{tenant: tenant, order_id: order_id} = state) do
-    # TODO add an item to the order
+    changeset = OrderItemSchema.changeset %OrderItemSchema{},
+                                          %{item_id: item_id,
+                                            order_id: order_id,
+                                            amount: amount}
+
+    Repo.insert! changeset,
+                 prefix: Triplex.to_prefix(tenant),
+                 conflict_target: [:order_id, :item_id],
+                 on_conflict: [inc: [amount: amount]]
+
+    {:noreply, state}
   end
 
   def handle_cast({:delete, item_id, amount},
