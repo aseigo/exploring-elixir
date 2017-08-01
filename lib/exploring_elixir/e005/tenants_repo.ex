@@ -1,4 +1,4 @@
-defmodule ExploringElixir.Tenants do
+defmodule ExploringElixir.Repo.Tenants do
   use Ecto.Repo, otp_app: :exploring_elixir
 
   def child_spec(opts) do

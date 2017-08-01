@@ -1,4 +1,4 @@
-defmodule ExploringElixir.Tenants.Migrations.Items do
+defmodule ExploringElixir.Repo.Tenants.Migrations.Items do
   use Ecto.Migration
 
   def change do

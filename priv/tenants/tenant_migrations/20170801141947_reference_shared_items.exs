@@ -1,13 +1,13 @@
-defmodule ExploringElixir.Tenants.Migrations.ReferenceSharedItems do
+defmodule ExploringElixir.Repo.Tenants.Migrations.ReferenceSharedItems do
   use Ecto.Migration
 
   @fk_name "order_items_fkey"
-  @repo ExploringElixir.Tenants
+  @repo ExploringElixir.Repo.Tenants
 
   def up do
     %{prefix: prefix} = Process.get(:ecto_migration)
     query = "alter table #{prefix}.orderitems
-             add constraint #{@fk_name} foreign key (id)
+             add constraint #{@fk_name} foreign key (item_id)
              references public.items(id)"
 
    Ecto.Adapters.SQL.query!(@repo, query, [])
