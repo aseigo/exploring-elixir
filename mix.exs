@@ -40,6 +40,7 @@ defmodule ExploringElixir.Mixfile do
       {:benchee, "~> 0.9.0"},
       {:benchee_html, "~> 0.3"},
       {:uuid, "~> 1.1.7"},
+      {:triplex, "~> 0.9.0"},
       {:quixir, "~>0.9", only: :test},
       {:remix, "~> 0.0.2", only: [:dev, :test]},
       {:credo, "~> 0.8.1", only: [:dev, :test]}
