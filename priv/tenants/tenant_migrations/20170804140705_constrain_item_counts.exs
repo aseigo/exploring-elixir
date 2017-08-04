@@ -9,7 +9,7 @@ defmodule ExploringElixir.Repo.Tenants.Migrations.ConstrainItemCounts do
              RETURNS trigger AS
              $$
              BEGIN
-              DELETE FROM orderitems WHERE id = NEW.id AND item_id = NEW.item_id;
+              DELETE FROM #{prefix}.orderitems WHERE id = NEW.id AND item_id = NEW.item_id;
               RETURN NULL;
              END
              $$ LANGUAGE plpgsql"
