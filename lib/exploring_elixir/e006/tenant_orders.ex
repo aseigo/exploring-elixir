@@ -32,6 +32,10 @@ defmodule ExploringElixir.Tenants.Orders do
     GenServer.cast(order, {:add, item_id, amount})
   end
 
+  def delete_item(order, item_id) do
+    GenServer.cast(order, {:delete, item_id})
+  end
+
   def delete_item(order, item_id, amount) do
     GenServer.cast(order, {:delete, item_id, amount})
   end
@@ -41,6 +45,8 @@ defmodule ExploringElixir.Tenants.Orders do
     orders = Repo.all query, prefix: Triplex.to_prefix(tenant)
     for order <- orders, do: Map.drop(order, @schema_meta_fields)
   end
+
+  def id(order), do: GenServer.call order, :id
 
   def init({tenant, order_name}) when is_bitstring(order_name) do
     changeset = OrderSchema.changeset(%OrderSchema{}, %{name: order_name})
@@ -56,16 +62,28 @@ defmodule ExploringElixir.Tenants.Orders do
   end
 
   def init({tenant, order_id}) when is_integer(order_id) do
-    {:ok, %{tenant: tenant, order_id: order_id}}
+    query = from o in "orders",
+            where: o.id == ^order_id,
+            select: o.id
+    case Repo.one query, prefix: Triplex.to_prefix(tenant) do
+      nil -> {:stop, :no_such_order}
+        _ -> {:ok, %{tenant: tenant, order_id: order_id}}
+    end
   end
 
   def handle_call(:list, _from,
                   %{tenant: tenant, order_id: order_id} = state) do
-    query = from i in OrderItemSchema,
-            where: i.order_id == ^order_id
-    items = Repo.all query, prefix: Triplex.to_prefix(tenant)
-    items = for item <- items, do: Map.drop(item, @schema_meta_fields)
+    items =
+      from(i in "orderitems",
+           where: i.order_id == ^order_id,
+           select: %{item: i.item_id, order: i.order_id, amount: i.amount})
+      |> Repo.all(prefix: Triplex.to_prefix(tenant))
+
     {:reply, items, state}
+  end
+
+  def handle_call(:id, _from, %{order_id: order_id} = state) do
+    {:reply, order_id, state}
   end
 
   def handle_cast({:add, item_id, amount},
@@ -83,8 +101,20 @@ defmodule ExploringElixir.Tenants.Orders do
     {:noreply, state}
   end
 
+  def handle_cast({:delete, item_id},
+                  %{tenant: tenant, order_id: order_id} = state) do
+    from(i in "orderitems",
+         where: [order_id: ^order_id, item_id: ^item_id])
+    |> Repo.delete_all(prefix: Triplex.to_prefix(tenant))
+    {:noreply, state}
+  end
+
   def handle_cast({:delete, item_id, amount},
                   %{tenant: tenant, order_id: order_id} = state) do
-    # TODO delete the item from the order
+    from(i in "orderitems",
+         where: [order_id: ^order_id, item_id: ^item_id])
+    |> Repo.update_all([inc: [amount: -amount]], [prefix: Triplex.to_prefix(tenant)])
+
+    {:noreply, state}
   end
 end
