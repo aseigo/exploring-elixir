@@ -3,6 +3,8 @@ defmodule ExploringElixir.Tenants.Schemas.OrderItem do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @primary_key false
+
   schema "orderitems" do
     field :item_id, :integer
     field :amount, :integer, default: 1

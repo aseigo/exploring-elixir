@@ -2,7 +2,7 @@ defmodule ExploringElixir.Repo.Tenants.Migrations.TenantOrderitems do
   use Ecto.Migration
 
   def change do
-    create table(:orderitems) do
+    create table(:orderitems, primary_key: false) do
       add :item_id, :integer
       add :amount, :integer
       add :order_id, references(:orders, on_delete: :delete_all)
