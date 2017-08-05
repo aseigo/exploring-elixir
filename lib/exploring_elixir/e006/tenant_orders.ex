@@ -2,9 +2,10 @@ defmodule ExploringElixir.Tenants.Orders do
   use GenServer
   require Logger
   import Ecto.Query
+
+  alias ExploringElixir.Repo.Tenants, as: Repo
   alias ExploringElixir.Tenants.Schemas.Order, as: OrderSchema
   alias ExploringElixir.Tenants.Schemas.OrderItem, as: OrderItemSchema
-  alias ExploringElixir.Repo.Tenants, as: Repo
 
   @schema_meta_fields [:__meta__, :__struct__]
 
