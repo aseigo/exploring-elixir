@@ -4,7 +4,7 @@ defmodule ExploringElixir.Repo.Tenants.Migrations.ConstrainItemCounts do
   @repo ExploringElixir.Repo.Tenants
   
   def up do
-    %{prefix: prefix} = Process.get(:ecto_migration)
+    prefix = Ecto.Migration.prefix
     query = "CREATE OR REPLACE FUNCTION remove_empties_from_orders()
              RETURNS trigger AS
              $$
