@@ -36,8 +36,20 @@ defmodule ExploringElixir do
   end
 
   def episode7 do
-  end
+    import ExploringElixir.AutoCluster
+    output = fn ->
+                visible_nodes()
+                hidden_nodes()
+                all_nodes()
+             end
 
+    output.()
+
+    autocluster()
+    Process.sleep 500 # give it a chance to cluster
+
+    output.()
+  end
 
   def ecto_perf do
     Application.ensure_all_started :postgrex
