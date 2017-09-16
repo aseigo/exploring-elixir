@@ -21,8 +21,9 @@ defmodule ExploringElixir.Mixfile do
     [
       {:benchee, "~> 0.9.0"},
       {:benchee_html, "~> 0.3"},
-      {:ecto, "~> 2.1.4"},
-      {:flow, "~> 0.11" },
+      {:ecto, "~> 2.1.6"},
+      {:flow, "~> 0.12" },
+      {:libcluster, "~> 2.2.3"},
       {:poison, "~> 3.1.0"},
       {:postgrex, "~> 0.13.3"},
       {:timex, "~> 3.0"},
@@ -32,7 +33,7 @@ defmodule ExploringElixir.Mixfile do
       # dev and test dependencies
       {:quixir, "~>0.9", only: :test},
       {:remix, "~> 0.0.2", only: [:dev, :test]},
-      {:credo, "~> 0.8.1", only: [:dev, :test]}
+      {:credo, "~> 0.8.6", only: [:dev, :test]}
     ]
   end
 end
