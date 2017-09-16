@@ -12,10 +12,19 @@ defmodule ExploringElixir.Mixfile do
 
   def application do
     [
+      # as a fist-full-of-demos, let's manually start our applications
+      # note that this is NOT best practice; normally one would not
+      # have an applications: entry at all and just let mix do its magic
+      # on our behalf
+      applications: applications(Mix.env),
       extra_applications: [:logger],
       mod: {ExploringElixir.Application, []}
     ]
   end
+
+  defp applications(:dev), do: [:remix]
+  defp applications(:test), do: [:remix]
+  defp applications(_), do: []
 
   defp deps do
     [
