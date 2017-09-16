@@ -5,8 +5,6 @@ defmodule ExploringElixir.Application do
 
   def start(_type, _args) do
     children = [
-      EctoBench.Repo,
-      ExploringElixir.Repo.Tenants,
       ExploringElixir.ChildSpec,
       {ExploringElixir.ChildSpec, %{type: :forever}},
       {ExploringElixir.ChildSpec, %{type: :random}}
