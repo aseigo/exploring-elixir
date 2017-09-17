@@ -38,29 +38,6 @@ defmodule ExploringElixir do
   end
 
   def episode7 do
-    spawn(
-    fn ->
-      loop =
-        fn f ->
-          ExploringElixir.AutoCluster.visible_nodes()
-          receive do
-            {:nodeup, node} ->
-              IO.puts IO.ANSI.green() <> String.duplicate(<<0x1F603 :: utf8>>, 5) <> IO.ANSI.reset() <> " New node joined: #{inspect node}"
-              f.(f)
-            {:nodedown, node} ->
-              IO.puts IO.ANSI.red() <> String.duplicate(<<0x1F630 :: utf8>>, 5) <> IO.ANSI.reset() <> " Node departed: #{inspect node}"
-              f.(f)
-            _ ->
-              :ok
-          end
-        end
-
-      Logger.info "Starting node monitor process #{inspect self()}"
-      :net_kernel.monitor_nodes true
-      loop.(loop)
-    end
-    )
-
     ExploringElixir.AutoCluster.autocluster()
   end
 
