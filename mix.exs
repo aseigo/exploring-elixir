@@ -7,7 +7,8 @@ defmodule ExploringElixir.Mixfile do
      elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps()]
+     deps: deps(),
+     aliases: aliases()]
   end
 
   def application do
@@ -44,5 +45,8 @@ defmodule ExploringElixir.Mixfile do
       {:remix, "~> 0.0.2", only: [:dev, :test]},
       {:credo, "~> 0.8.6", only: [:dev, :test]}
     ]
+  end
+
+  defp aliases do
   end
 end
