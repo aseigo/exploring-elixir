@@ -23,6 +23,12 @@ defmodule ExploringElixir do
   end
 
   def episode3 do
+    IO.puts "Using child_spec/1, we launched various processes in ExploringElixir.ChildSpec"
+    IO.puts "Look in lib/exploring_elixir/application.ex to see how clean it is!"
+    IO.puts "Now lets call into them to show they are indeed running:"
+    IO.inspect ExploringElixir.ChildSpec.ping ExploringElixir.ChildSpec.Permanent
+    IO.inspect ExploringElixir.ChildSpec.ping ExploringElixir.ChildSpec.Temporary
+    ExploringElixir.ChildSpec.RandomJump.rand 100
   end
 
   def episode4 do
