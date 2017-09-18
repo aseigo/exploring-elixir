@@ -26,6 +26,12 @@ defmodule ExploringElixir do
   end
 
   def episode4 do
+    IO.puts "Run the property tests with `mix test --only collatz`"
+    IO.puts "NOTE: this will recompile the project in test mode!"
+
+    count = 10
+    IO.puts "Run with the first #{count} positive integers:"
+    ExploringElixir.Collatz.step_count_for Enum.to_list 1..count
   end
 
   def episode5 do

@@ -3,17 +3,29 @@ defmodule ExploringElixir.AutoCluster do
   def hidden_nodes, do: Node.list(:hidden) |> display_nodes("Hidden Nodes") 
   def all_nodes, do: Node.list(:known) |> display_nodes("All Nodes")
 
+  def ping_node(node) when is_atom(node), do: Node.ping node
+
   def autocluster do
-    spawn(
+    monitor()
+    Application.ensure_all_started(:libcluster)
+  end
+
+  def monitor, do: monitor Process.whereis(:cluster_monitor)
+
+  def monitor(nil) do
+    pid = spawn(
       fn ->
-        IO.puts "Starting node monitor process #{inspect self()}"
+        IO.puts "Starting node monitor process"
         :net_kernel.monitor_nodes true
         monitor_cluster()
       end
     )
 
-    Application.ensure_all_started(:libcluster)
+    Process.register(pid, :cluster_monitor)
+    pid
   end
+
+  def monitor(_), do: IO.puts "Already monitoring!"
 
   defp monitor_cluster do
     ExploringElixir.AutoCluster.visible_nodes()
@@ -24,7 +36,7 @@ defmodule ExploringElixir.AutoCluster do
       {:nodedown, node} ->
         IO.puts bad_news_marker() <> " Node departed: #{inspect node}"
         monitor_cluster()
-      _ ->
+      x -> IO.puts "Outa here with #{x}"
         :ok
     end
   end
