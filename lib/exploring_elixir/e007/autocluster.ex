@@ -5,9 +5,19 @@ defmodule ExploringElixir.AutoCluster do
 
   def ping_node(node) when is_atom(node), do: Node.ping node
 
-  def autocluster do
+  def start do
     monitor()
     Application.ensure_all_started(:libcluster)
+  end
+
+  def connect_node(node) do
+    IO.puts "Going to connect up node #{inspect node}..."
+    :net_kernel.connect(node)
+  end
+
+  def disconnect_node(node) do
+    IO.puts "Going to disconnect node #{inspect node}..."
+    :net_kernel.disconnect(node)
   end
 
   def monitor, do: monitor Process.whereis(:cluster_monitor)
