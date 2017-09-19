@@ -50,7 +50,7 @@ defmodule ExploringElixir do
   end
 
   def episode7 do
-    ExploringElixir.AutoCluster.autocluster()
+    ExploringElixir.AutoCluster.start()
   end
 
   def ecto_perf do

@@ -74,7 +74,8 @@ defmodule ExploringElixir.Dist.Service_dist do
   end
 
   def childspecs do
-    :inet_tcp_dist.childspecs
+    #:inet_tcp_dist.childspecs
+    []
   end
 end
 
