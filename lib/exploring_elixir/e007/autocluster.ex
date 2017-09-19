@@ -1,7 +1,18 @@
 defmodule ExploringElixir.AutoCluster do
-  def visible_nodes, do: Node.list() |> display_nodes("Visible Nodes") 
-  def hidden_nodes, do: Node.list(:hidden) |> display_nodes("Hidden Nodes") 
-  def all_nodes, do: Node.list(:known) |> display_nodes("All Nodes")
+  def visible_nodes do
+    Node.list()
+    |> display_nodes("Visible Nodes")
+  end
+
+  def hidden_nodes do
+    Node.list(:hidden)
+    |> display_nodes("Hidden Nodes") 
+  end
+
+  def all_nodes do
+    Node.list(:known)
+    |> display_nodes("All Nodes")
+  end
 
   def ping_node(node) when is_atom(node), do: Node.ping node
 
