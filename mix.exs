@@ -39,6 +39,8 @@ defmodule ExploringElixir.Mixfile do
       {:timex, "~> 3.0"},
       {:triplex, "~> 0.9.0"},
       {:uuid, "~> 1.1.7"},
+      {:jalaali, "~> 0.2.1"},
+      {:ok, "~> 1.9"},
 
       # dev and test dependencies
       {:quixir, "~>0.9", only: :test},
