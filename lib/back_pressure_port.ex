@@ -1,4 +1,10 @@
 defmodule BackPressurePort do
+  @moduledoc """
+    Provides a POC implementation of a GenServer that wraps a Port
+    with message limiting, effectively providing back-pressure
+    to the writers and avoiding memory exhaustion / backlog collapse
+    on the Elixir side.
+  """
   use GenServer
 
   require Logger
@@ -29,6 +35,8 @@ defmodule BackPressurePort do
 
   def handle_call(:open_port, _from, %{port: nil} = state) do
     p = open state
+    # unecessary to rate limit here as the port was just opened
+    # and it will get rate limited on the first call to handle_info
     {:reply, :ok, %{state|port: p}}
   end
 
