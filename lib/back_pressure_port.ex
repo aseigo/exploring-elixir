@@ -30,7 +30,7 @@ defmodule BackPressurePort do
   end
 
   def handle_cast({:limit, limit}, state) do
-    {:noreply, %{state|limit: limit}}
+    {:noreply, rate_limit(%{state|limit: limit})}
   end
 
   def handle_call(:open_port, _from, %{port: nil} = state) do
