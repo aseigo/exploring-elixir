@@ -41,6 +41,7 @@ defmodule ExploringElixir.Mixfile do
       {:uuid, "~> 1.1.7"},
       {:jalaali, "~> 0.2.1"},
       {:ok, "~> 1.9"},
+      {:nifsy, "~> 0.1.0"},
 
       # dev and test dependencies
       {:quixir, "~>0.9", only: :test},
